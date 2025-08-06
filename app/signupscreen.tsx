@@ -12,7 +12,6 @@ export default function SignupScreen() {
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
-
     if (!fullName.trim()) {
       newErrors.fullName = 'Full name is required';
     }
@@ -133,10 +132,11 @@ const styles = StyleSheet.create({
       gap: 16,
     },
     label:{
-        fontSize:15,
-        fontWeight:'500',
-        color:'#666262',
-        marginHorizontal:10,
+      fontSize:15,
+      fontWeight:'500',
+      color:'#666262',
+      marginHorizontal:10,
+      marginBottom: -10,
     },
     input: {
       backgroundColor: '#f2f2f2',
@@ -169,6 +169,5 @@ const styles = StyleSheet.create({
       fontSize: 12,
       marginLeft: 10,
       marginTop: -10,
-      marginBottom: 10,
     },
 })
