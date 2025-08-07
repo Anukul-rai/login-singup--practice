@@ -32,7 +32,7 @@ export default function Homepage() {
         setLoading(true)
         try {
             await signOut()
-            router.replace('/')
+            router.replace('/loginscreen')
         } catch (error) {
             console.error('Logout error:', error)
             Alert.alert("Error", "Failed to logout. Please try again.")
