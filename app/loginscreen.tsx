@@ -3,8 +3,26 @@ import React from 'react'
 import { router } from 'expo-router'
 import { COLORS } from '@/constants/theme'
 import {Ionicons} from '@expo/vector-icons'
+import { useSSO } from '@clerk/clerk-expo'
 
 export default function LoginScreen() {
+    const {startSSOFlow}=useSSO()
+
+    const handleGoogleSignIn=async()=>{
+        // setLoading(true)
+        try {
+            const{createdSessionId,setActive}=await startSSOFlow({strategy:"oauth_google"})  // all from clerk 
+            if(setActive && createdSessionId){
+                setActive({session:createdSessionId}) //authenticate the current user
+                router.replace('/homepage')
+            }
+        } catch (error) {
+            console.log("Oauth-error",error)
+            Alert.alert("Login Error", "Something went . Please try again.");
+        }finally{
+            // setLoading(false)
+        }
+    }
     return (
         <View style={styles.container}>
         <View style={styles.arrowContainer}>
@@ -47,13 +65,13 @@ export default function LoginScreen() {
                 </View>
                 <Text style={{fontSize:20,fontWeight:'600',textAlign:'center'}}>OR</Text>
                 <View style={styles.icons}>
-                    <TouchableOpacity onPress={()=>Alert.alert('Want to login with google?')}>
+                    <TouchableOpacity onPress={handleGoogleSignIn}>
                         <Ionicons name='logo-google' size={35}/>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>Alert.alert('Want to login with apple?')}>
                         <Ionicons name='logo-apple' size={35} />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>Alert.alert('Want to login with facebook?')}>
+                    <TouchableOpacity onPress={handleGoogleSignIn}>
                         <Ionicons name='logo-facebook' size={35} color={'blue'} />
                     </TouchableOpacity>
                 </View>
